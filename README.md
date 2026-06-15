@@ -1,133 +1,80 @@
-# AIS-OS — AI Operating System starter kit for Claude Code
+# GDrive AI OS
 
-A free, MIT-licensed starter kit that turns Claude Code into your personal **AI Operating System (AIOS)**. Audience: anyone building automations — solopreneurs, small business operators, managers, creators, AI consultants. Pairs with a companion masterclass video.
+A browser-and-Google-Drive adaptation of [AIS-OS](https://github.com/nateherkai/AIS-OS) by Nate Herk.
 
-The kit personalizes itself to you via an `/onboard` interview, then gives you two recurring thinking skills (`/audit`, `/level-up`) to keep building leverage week over week.
+## Why this fork exists
 
-> **AIS-OS** stands for **AI Automation Society OS** — the way Nate designed this AIOS to be set up for members of his community, [AI Automation Society](https://www.skool.com/ai-automation-society). The kit is universal (it works for anyone), but the structure mirrors how AIS members run their own businesses on top of it.
+The original AIS-OS is excellent, and it runs in Claude Code: a local repo, a terminal, slash-command skills, files on your machine. That rules out most people, who use Claude in the browser and have never opened a command line.
 
----
+This fork is for them. It rebuilds the same idea, a personal AI operating system that knows your world and runs things, **entirely inside Claude.ai**, with the file system living in **Google Drive**. No Claude Code. No terminal. No local files. If you can use Claude in a browser tab and you have a Google account, you can run this.
 
-## The litmus test
+## What is different from upstream
 
-> **"While you're not at your desk, your AIS-OS observes one real-world event and produces an output that's faster and more accurate than what you'd produce yourself."**
+- **Runs in the browser, not Claude Code.** No repo to clone, no command line.
+- **The file system lives in Google Drive.** Claude reaches it through the Google Drive connector.
+- **Skills replace the slash commands.** `/onboard`, `/audit`, and `/level-up` become uploaded Skills (`setup-os`, `os-audit`, `os-level-up`) you add at Customize, Skills.
+- **Saving is create-only.** The Drive connector can create files but not edit them, so the OS never overwrites. Every save is a new dated note, and the decision log is a folder of dated notes rather than one appended file.
 
-Every design decision in this kit rolls up to that test. If a layer, skill, or template doesn't contribute to it, it doesn't ship.
+## What is in this repo
 
----
+- `os-vault/` — the starter files that go into a Google Drive folder named **AI OS**. This is the file system: `CLAUDE.md`, `me.md`, `connections.md`, `context/`, `decisions/`, `references/`.
+- `skills/` — the Skills you upload to Claude (one folder each, plus `INDEX.md`).
+- `project-instructions.md` — the short block you paste into your Claude Project.
 
-## How you'll know it's working
+## How to set it up, in detail
 
-Three felt **success indicators** tell you the AIOS is actually changing how you work. Not KPIs — there's no objective metric. These are lived experiences that show up in your week.
+Follow these in order. Nothing here needs code or a terminal.
 
-**1. Team-reaches-out:**
+### Prerequisites
 
-> *"A teammate messages you with a question. You realize your AIOS would answer it better, faster, and with exact sources — even if you were awake and free. So you ask your AIOS too. That's the moment you stop being a bottleneck for your own knowledge."*
+- A Claude account with Connectors and Skills (a paid plan).
+- A Google account (Drive, Gmail, Calendar). Plus any other tools you want connected (your CRM, project boards, design tool).
 
-**2. Context-switching reduction:**
+### Step 1 — Connect your sources
 
-> *"You stop opening new tabs. You stop launching the desktop app. When something new lands, your first move is to ask the AIOS, not to open six things. The default surface for thought work shifts. Silent. Compounding."*
+In claude.ai, open **Settings, then Connectors**. For each tool, find it by name, click **Connect**, and approve the sign-in: **Google Drive, Gmail, Google Calendar**, and whatever else you run on (many tools have one-click connectors; common ones include monday.com, ClickUp, Notion, Canva). After each, test it in a chat, for example "List five files from my Google Drive."
 
-**3. Knowledge-leaves-your-head:**
+If a tool has no built-in connector (many CRMs do not), bridge it with **Zapier**: at **mcp.zapier.com**, create an MCP server, choose Claude as the client, switch on the actions you want, copy the server URL, then add it in Claude under **Settings, Connectors, Add custom connector**.
 
-> *"You stop trying to remember business facts. You don't rehearse what you decided last quarter or what your customer said in that meeting. You trust the retrieval. The AIOS holds the truth, you hold the questions."*
+### Step 2 — Turn on file creation
 
-**Personal foundation → company AI-readiness.** Once these indicators show up for one person, the same data architecture powers everything else. Custom dashboards on the data you already collect. Automations on top of the connections you already wired. Team rollout where everyone has theirs. *A company where every operator runs a personal AIOS is a company that's actually AI-ready.*
+In Claude **Settings**, enable file creation (the capability that lets Claude create and save files, sometimes shown alongside code execution). This is required: without it, the `setup-os` and `save-to-os` skills cannot write to your Drive.
 
-The kit teaches personal AIOS first. Everything scales from there.
+### Step 3 — Create the Drive folder
 
----
-
-## Two frameworks
-
-The kit teaches two complementary frameworks. **Three Ms first, Four Cs second.** Without the brain rewire, the architecture is just a folder structure.
-
-### The Three Ms — operator brain (how you think)
-
-| M | One-liner |
-|---|---|
-| **Mindset** | Default Shift, Function Breakdown, Curiosity Rule. *To what extent can AI be leveraged here?* |
-| **Method** | Find Constraint → EAD (Eliminate, Automate, Delegate) → Map Process → Pick Autonomy Level → Tie to KPI. |
-| **Machine** | Lego Principle, Validation Chain, Bike Method, Intern Rule, Kill Switch. *Boring is beautiful. Workflows beat agents.* |
-
-Full breakdown in `references/3ms-framework.md`. The `/level-up` skill walks you through all three weekly.
-
-> *The Three Ms of AI™ is a trademark of Nate Herk. © 2026 Nate Herk.*
-
-### The Four Cs — architecture (what you build)
-
-| # | Layer | One-liner | "This layer is in place" test |
-|---|---|---|---|
-| 1 | **Context** | Knows your business | Fresh Claude session answers "what does this business do and who works here?" without browsing |
-| 2 | **Connections** | Reaches your stuff | "What's on my calendar tomorrow and what tasks are due?" → live data, no paste |
-| 3 | **Capabilities** | Knows how to do the work | A short phrase triggers a multi-step workflow that produces an artifact |
-| 4 | **Cadence** | Runs without being asked | Laptop closed. A brief lands in the inbox. A teammate messages it and gets a real answer |
-
-**Brand line:** Context. Connections. Capabilities. Cadence.
-
-> *The Four Cs of an AIOS™ is a trademark of Nate Herk. © 2026 Nate Herk.*
-
-Dependency graph: Context is non-skippable. Connections + Capabilities can build in parallel. Cadence is last — don't automate workflows that don't work manually.
-
----
-
-## What ships — 3 skills
-
-The kit is intentionally lean. Skills here are ideation prompts and thinking tools, not heavy automations. You hack on top of the structure.
-
-| Skill | Type | When to run |
-|---|---|---|
-| `/onboard` | Setup wizard (one-time) | Day 1, immediately after clone. 7-question interview. Generates Day-1 file set + fills `CLAUDE.md`. |
-| `/audit` | Recurring thinking skill | Day 7, then weekly. Four-Cs gap report. Read-only. Watch the score climb. |
-| `/level-up` | Recurring thinking skill | Day 14, then weekly. Three Ms interview (Mindset → Method → Machine). One run = one shipped artifact. |
-
-`/audit` asks *"is the AIOS built right?"* (form). `/level-up` asks *"what business leverage am I missing?"* (function). They work in series — fix structure first, then capability planning becomes meaningful.
-
----
-
-## Quick start
-
-1. **Clone the repo** to a working folder on your machine.
-2. **Open it in Claude Code** and run `/onboard`. Answer the 7 questions honestly. Voice samples must be pasted, not described. Takes ~15 minutes. Day-1 file set drops at the end.
-3. **Use it for a week.** Bring real questions. Make real decisions. Log them via `/decision` (or just append to `decisions/log.md`).
-4. **Day 7:** run `/audit`. Read the Four-Cs gap report. Pick one gap to close.
-5. **Day 14:** run `/level-up`. The Three Ms interview surfaces one automation worth building. Build it.
-6. **Week 3+:** weekly `/level-up` ritual. One shipped artifact per week.
-
----
-
-## Repo layout
+In Google Drive, click **New, Folder**, and name it **AI OS**. Open it and upload everything from this repo's `os-vault/`, keeping the structure:
 
 ```
-AIS-OS/
-├── README.md
-├── CLAUDE.md                        ← Your operating manual (filled by /onboard)
-├── EXPANSIONS.md                    ← What to add as you grow
-├── LICENSE
-├── .gitignore
-├── aios-intake.md                   ← Source-of-truth for /onboard. Edit + re-run any time.
-├── connections.md                   ← Registry of every system your AIOS can reach
-├── context/                         ← About you, your business (filled by /onboard)
-├── references/
-│   └── 3ms-framework.md             ← The operator brain
-├── decisions/
-│   └── log.md                       ← Append-only record of what was decided and why
-├── archives/                        ← Old stuff. Don't delete. Move here.
-└── .claude/
-    └── skills/
-        ├── onboard/SKILL.md
-        ├── audit/SKILL.md
-        └── level-up/SKILL.md
+AI OS/
+  00-README.md
+  CLAUDE.md
+  me.md
+  connections.md
+  context/
+    business.md
+  decisions/
+    0000-how-the-log-works.md
+  references/
+    frameworks.md
 ```
 
-See `EXPANSIONS.md` for what to add as you grow (`projects/`, `templates/`, `scripts/`, `.claude/agents/`, sub-OS folders, etc.).
+### Step 4 — Create the Claude Project
 
----
+In claude.ai, open **Projects, New project**, and name it **AI OS**. Open the project's settings and paste the contents of `project-instructions.md` into the **custom instructions** field. Then add the Google Drive **AI OS** folder to the project so Claude reads it. Test: ask "What is in my OS folder?" and it should list the files.
 
-## License + attribution
+### Step 5 — Upload the skills
 
-MIT License. © 2026 Nate Herk.
+For each folder inside this repo's `skills/` (`setup-os`, `save-to-os`, `question-mode`, `skill-creator`, `os-audit`, `os-level-up`): **zip the folder** so the zip contains its `SKILL.md`, then in Claude go to **Customize, Skills, Create skill** and upload the zip. Six uploads, one per skill. (`INDEX.md` is a reference, not a skill; do not upload it.)
 
-The Three Ms of AI™ and The Four Cs of an AIOS™ are trademarks of Nate Herk. Both frameworks ship in this repo with attribution. Use freely; don't repackage as your own.
+### Step 6 — Onboard
 
-The companion masterclass video walks you through the kit step by step. Link will land here once it ships.
+In the project, say **"set up my OS."** The `setup-os` skill interviews you one question at a time, then writes your `me.md` and `context` from your answers and pulls a first map of what your connected tools hold. It shows you each file before saving.
+
+### Step 7 — Keep it alive
+
+- As real decisions happen: **"log this decision."**
+- Once a week: **"run my audit"** (what is thin or leaking) and **"level up"** (turn one manual task into a skill).
+
+## Credit and license
+
+Forked from [nateherkai/AIS-OS](https://github.com/nateherkai/AIS-OS), MIT licensed, © Nate Herk. The Four Cs and Three Ms frameworks are his; they are used here with attribution under the original MIT terms. "The Three Ms of AI" is his trademark. The LICENSE file is preserved unchanged. This fork only adapts the kit to run in browser Claude with Google Drive.
