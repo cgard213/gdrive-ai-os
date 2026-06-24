@@ -1,8 +1,8 @@
 # me.md
 
-This file is who you are and how you want your Claude to work with you. Your Claude reads it first, on every task. The better it is, the more your Claude feels like a teammate who gets you instead of a generic assistant.
+This file is who you are and how you want your AI to work with you. It is read first, on every task, across all your paths. The better it is, the more the AI feels like a teammate who gets you instead of a generic assistant.
 
-Do not fill this in cold. Ask your Claude: **"use question mode to help me write my me.md."** It will ask you one question at a time and build this out with you, which is how you get a real one instead of a vague one.
+Do not fill this in cold. Say **"use question mode to help me write my me.md."** It will ask you one question at a time and build this out with you, which is how you get a real one instead of a vague one.
 
 Fill each part in your own words. Delete the prompts once you have answers.
 
@@ -31,3 +31,11 @@ Fill each part in your own words. Delete the prompts once you have answers.
 ## What good help looks like
 
 - _____
+
+## The boundary (what never goes in the OS)
+
+This folder is read by an AI and can be shared across tools. Some things should not live here. Name them so the AI never asks for them or writes them down.
+
+- Sensitive personal data (account numbers, medical detail, anything you would not put in a shared doc): _____
+- Client or employer secrets, credentials, keys: _____
+- Anything else off-limits: _____

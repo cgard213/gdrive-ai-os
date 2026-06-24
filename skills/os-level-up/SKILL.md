@@ -5,11 +5,11 @@ description: Weekly pass to move one manual task toward automation, using the Th
 
 # OS level up
 
-Once a week, take one thing the user did by hand and move it from Mindset to Machine, using the Three Ms from `references/frameworks.md`.
+Once a week, take one thing the user did by hand and move it from Mindset to Machine, using the Three Ms from `_shared/frameworks.md`.
 
 ## How to run
 
-1. **Find the task.** Ask what they did by hand this week that they would rather not do again. One question. If they are not sure, look at recent chats and `decisions/` for repeated work and suggest two or three.
+1. **Find the task.** Ask what they did by hand this week that they would rather not do again. One question. If they are not sure, look at recent chats and the `decisions/` folders for repeated work and suggest two or three.
 2. **Pick the one with the most leverage:** done often, takes real time, same steps each time.
 3. **Walk the Three Ms:**
    - **Method.** Write the steps down with them, in plain order. Use question mode if the steps are not obvious.
