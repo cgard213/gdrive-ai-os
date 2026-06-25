@@ -1,47 +1,85 @@
 # AI OS (Google Drive)
 
-A provider-agnostic adaptation of Nate Herk's AIS-OS (github.com/nateherkai/AIS-OS). Credit to him for the frameworks and the shape.
+Your own AI that actually knows you. It lives in a Google Drive folder and works with Claude, Gemini, or ChatGPT. You do not need to know how to code. Your AI sets up almost all of it for you.
 
-The original AIS-OS runs in Claude Code on a local machine. This version is built for someone working entirely in the browser, with the file system living in Google Drive, and it runs through any of the three major assistants: Claude, Gemini, or ChatGPT. No command line, no install.
+Adapted from Nate Herk's AIS-OS (github.com/nateherkai/AIS-OS). Credit to him for the frameworks and the shape.
 
-## What is different from upstream AIS-OS
+## Set it up
 
-- **Runs in the browser, not Claude Code.** No local repo, no terminal.
-- **Provider-agnostic.** One Google Drive folder is the source of truth. Claude, Gemini, and ChatGPT are three front doors into it. Onboarding asks which one you use and indexes accordingly. See `os-vault/_shared/platforms.md`.
-- **Split by path.** The OS holds `business/`, `personal/`, and `work/` as separate areas. You set up only the ones you use.
-- **Rollup plus history.** Each path keeps one living `overview.md` (the current state, small enough for a Gemini Gem) and an append-only `decisions/` of dated notes (the history). The weekly audit folds those notes back into the rollup.
-- **Skills as reusable procedures.** Each repeatable task is written once as a skill. On Claude you upload it as a Skill, on Gemini you fold it into a Gem, on ChatGPT into a Custom GPT. Same procedure, each platform's own word for it.
+Open Claude, Gemini, or ChatGPT. Start a new chat. Copy the whole prompt below, paste it in, and do what it says. It goes one step at a time and handles everything it can for you.
 
-## What is in this repo
+```
+You are setting up my AI Operating System with me. Treat me like I have
+never done anything technical. Do everything you are able to do yourself.
+For the few things only I can click, tell me exactly where to click, one
+step at a time, and wait for me. Never give me more than one step at once.
+Make every choice you reasonably can for me with a sensible default, and
+only ask me when you truly cannot decide.
 
-- `os-vault/` — the starter files that go into your Google Drive folder. This is the file system: `start-here.md`, `instructions.md`, `me.md`, the path folders, and `_shared/`.
-- `skills/` — the Claude Skill packaging of each skill (one folder each).
-- `platform-setup/` — the deeper setup guide for each assistant: `claude.md`, `gemini.md`, `chatgpt.md`.
-- `project-instructions.md` — the short block you paste into your project, gem, or custom GPT.
+The system is in this public GitHub repo:
+https://github.com/cgard213/gdrive-ai-os
+Read it first, especially README.md, os-vault/instructions.md, and
+os-vault/_shared/platforms.md, so you know how it works and how it should
+be set up for the assistant I am using.
 
-## Setup
+Then walk me through this, one step at a time, waiting for me each time:
 
-Follow these in order. Nothing here needs code or a terminal.
+1. Ask me which assistant I am talking to right now: Claude, Gemini, or
+   ChatGPT. Follow that platform's path for everything after this.
+2. Help me connect Google Drive to you. Give me the exact clicks for my
+   platform. Have me confirm it works by asking you to list a few of my
+   Drive files.
+3. Tell me to create one new, empty folder in Google Drive named
+   "My AI OS" and paste you the link to it.
+4. Put the OS files into that folder: create the files from this repo's
+   os-vault/ folder inside my folder, keeping the same structure. If you
+   cannot write to my Drive on this platform, tell me to download the repo
+   as a ZIP from GitHub (Code, then Download ZIP) and drop the os-vault
+   contents in, then check it with me.
+5. Help me create my workspace (a Claude Project, a Gemini Gem, or a
+   ChatGPT Project or Custom GPT), paste in the text from this repo's
+   project-instructions.md, and connect my folder. On Gemini, point it
+   only at the small rollup files, not the whole folder; the repo explains
+   why.
+6. On Claude, help me add the skills from the repo's skills/ folder. On
+   Gemini and ChatGPT, set them up the way the repo describes instead.
+7. Once everything is connected, start onboarding me: ask me about myself
+   one question at a time, and write my files, showing me each one before
+   you save it.
 
-### Step 1 — Connect your sources
+Keep it friendly and plain. Expect me to get confused, and slow down if I do.
+```
 
-The connect step is different on each platform. Do the one for your assistant. The full per-platform walkthrough is in `platform-setup/`.
+That is the whole setup. The assistant takes it from there.
 
-**Claude.** Open claude.ai. Go to Settings, then Connectors, or use the + menu in the message composer. (On desktop it is Customize, Connectors, +.) Connect Google Drive, and any of Gmail, Google Calendar, and your other tools, approving each sign-in window. On a Team or Enterprise plan an org owner has to enable a connector before you can. For a tool with no built-in connector (for example a CRM like Follow Up Boss), use mcp.zapier.com to create an MCP server, switch on the actions you want, copy the server URL, then in Claude add it under Settings, Connectors, Add custom connector.
+## What you need
 
-**ChatGPT.** Open chatgpt.com. Go to Settings, then Connectors, and add Google Drive. Full sync needs a Team or Enterprise plan (Plus is limited, Free has no connectors). You will link the OS folder to a Project in Step 4.
+- A Google account (for Google Drive).
+- Claude, Gemini, or ChatGPT on a plan that can connect to Google Drive. Free plans are usually too limited; a paid plan works.
+- About fifteen minutes.
 
-**Gemini.** There is no connector to add. An admin turns on Workspace apps in Gemini (Drive, Gmail, Calendar) for your account. Gemini reaches Drive natively. You will reference the OS files from a Gem in Step 4.
+## What the assistant is doing for you
 
-After connecting, test it in a new chat, for example "List five files from my Google Drive."
+So nothing feels like a black box, here is the same flow in plain words. You do not run this yourself, the prompt above does.
 
-### Step 2 — Turn on file creation (Claude only)
+1. Finds out which assistant you use.
+2. Helps you connect Google Drive.
+3. Has you make one empty Drive folder and share the link.
+4. Fills that folder with the OS files from this repo.
+5. Builds your project, Gem, or Custom GPT and connects your folder.
+6. Adds the skills (Claude) or the equivalent (Gemini, ChatGPT).
+7. Interviews you, one question at a time, and writes your files.
 
-In Claude Settings, enable file creation (the capability that lets Claude create and save files). Without it the onboard and save skills cannot write to your Drive. On Gemini and ChatGPT this step does not apply, capture works differently (see `platforms.md`).
+After that you just talk to it. Say "log this decision" when you decide something, drop quick notes in the inbox, and once a week say "run my audit" and "level up."
 
-### Step 3 — Create the Drive folder
+## What is inside
 
-In Google Drive, click New, Folder, and name it for yourself (for example "My AI OS"). Open it and upload everything from this repo's `os-vault/`, keeping the structure:
+- `os-vault/` — the files that go into your Google Drive folder. This is the part your AI reads to know you.
+- `skills/` — the small reusable tools (uploaded as Skills on Claude; folded into a Gem or Custom GPT elsewhere).
+- `platform-setup/` — the deeper per-assistant guide: `claude.md`, `gemini.md`, `chatgpt.md`.
+- `project-instructions.md` — the short block your AI pastes into your project, Gem, or Custom GPT.
+
+## The folder, once it is built
 
 ```
 My AI OS/
@@ -69,33 +107,9 @@ My AI OS/
       INDEX.md
 ```
 
-You can delete the path folders you do not plan to use. Onboarding will only fill in the ones you keep.
+You only keep the paths you want (business, personal, work). Your AI sets up the ones you use and skips the rest.
 
-### Step 4 — Create the project, gem, or custom GPT
+## For the curious
 
-Open `project-instructions.md` and paste the block into your assistant's instructions field.
-
-- **Claude:** Projects, New project, paste into custom instructions, then add the OS Drive folder to the project.
-- **ChatGPT:** New Project (or a Custom GPT), paste into instructions, then link the OS Drive folder.
-- **Gemini:** New Gem, paste into instructions, then reference the rollup files (`me.md`, `_shared/`, each `overview.md`). Do not point a Gem at the whole folder, it caps at about 10 files.
-
-Test: ask "What is in my OS folder?" and it should describe it.
-
-### Step 5 — Add the skills
-
-- **Claude:** for each folder in this repo's `skills/`, zip the folder so the zip holds its `SKILL.md`, then in Claude go to Customize, Skills, Create skill and upload the zip. One upload per skill. (`INDEX.md` is a reference, not a skill, do not upload it.)
-- **Gemini and ChatGPT:** there is no skill upload. The skills live in `_shared/skills/`. Paste the one you need into the chat, or fold the common ones into your Gem or Custom GPT instructions.
-
-### Step 6 — Onboard
-
-In your project, gem, or GPT, say **"onboard me."** The onboard skill asks which platform you run and which paths you want, interviews you one question at a time, writes your `me.md` and each path's `overview.md` from your answers, and pulls a first map of what your connected tools hold. It shows you each file before saving.
-
-### Step 7 — Keep it alive
-
-- As real calls happen: **"log this decision."**
-- Whatever lands in your head: drop a one-line note in `inbox/`.
-- Once a week: **"run my audit"** (what is thin or leaking, and triage the inbox) and **"level up"** (turn one manual task into a skill).
-
-## Frameworks
-
-The Four Cs (Context, Connections, Capabilities, Cadence) and the Three Ms (Mindset, Method, Machine) are from AIS-OS. See `os-vault/_shared/frameworks.md`. They are used as-is with attribution, not repackaged.
+- How it adapts to each assistant: `os-vault/_shared/platforms.md`.
+- The thinking it runs on (the Four Cs and Three Ms): `os-vault/_shared/frameworks.md`, from AIS-OS, used with attribution.
